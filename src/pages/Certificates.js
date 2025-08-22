@@ -9,7 +9,8 @@ export default function Certificates() {
   const [certificates, setCertificates] = useState([]);
 
   useEffect(() => {
-    axios.get("https://learnx-enroll.onrender.com/api/certificates")
+    axios.get(`${process.env.REACT_APP_API_URL}/certificates`)
+
       .then(res => setCertificates(res.data))
       .catch(err => console.log(err));
   }, []);

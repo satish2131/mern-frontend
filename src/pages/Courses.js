@@ -14,7 +14,8 @@ export default function Courses() {
 
   useEffect(() => {
     axios
-      .get("https://learnx-enroll.onrender.com/api/courses")
+      .get(`${process.env.REACT_APP_API_URL}/courses`)
+
       .then((res) => setCourses(res.data))
       .catch((err) => console.log(err));
   }, []);
