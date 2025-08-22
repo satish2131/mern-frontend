@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import api from "../api";
 import "./Courses.css";
 import EnrollmentModal from "../components/EnrollmentModal"; // 🔥 reuse same modal
 
@@ -17,6 +18,12 @@ export default function Courses() {
       .then((res) => setCourses(res.data))
       .catch((err) => console.log(err));
   }, []);
+
+  useEffect(() => {
+  api.get("/api/certificates")
+    .then(res => setCourses(res.data))
+    .catch(err => console.log(err));
+}, []);
 
   useEffect(() => {
     const handleEnrollEvent = (e) => {

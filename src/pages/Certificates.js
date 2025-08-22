@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import api from "../api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import "./Certificates.css";
@@ -12,6 +13,12 @@ export default function Certificates() {
       .then(res => setCertificates(res.data))
       .catch(err => console.log(err));
   }, []);
+
+  useEffect(() => {
+  api.get("/api/certificates")
+    .then(res => setCertificates(res.data))
+    .catch(err => console.log(err));
+}, []);
 
   return (
     <div className="certificates-page">
