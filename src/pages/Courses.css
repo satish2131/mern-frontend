@@ -1,0 +1,161 @@
+/* Courses Container */
+.courses-container {
+  color: white;
+  padding: 50px 15px;
+  max-width: 1400px;
+  margin: 0 auto;
+  text-align: center;
+
+  /* Flex settings for mobile vertical centering */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Title */
+.courses-container h2 {
+  font-size: 2.5rem;
+  margin-bottom: 50px;
+  color: #ffcc00;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Grid layout for responsive 3 cards per row */
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  justify-items: stretch;
+}
+
+/* Course Card */
+.course-card {
+  background: #1a1a1a;
+  padding: 20px;
+  border-radius: 15px;
+  transition: all 0.4s ease;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+/* Hover Effect */
+.course-card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 10px 25px rgba(255, 204, 0, 0.4);
+}
+
+/* Course Image */
+.course-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  transition: transform 0.3s ease;
+}
+
+.course-card img:hover {
+  transform: scale(1.05);
+}
+
+/* Course Title */
+.course-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #ffcc00;
+  font-weight: bold;
+}
+
+/* Course Description */
+.course-card p {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #ddd;
+  line-height: 1.4;
+}
+
+/* Duration Badge */
+.course-card .duration-badge {
+  background: #ffcc00;
+  color: #111;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  display: inline-block;
+}
+
+/* Enroll Button */
+.enroll-btn {
+  display: inline-block;
+  background: linear-gradient(90deg, #ffcc00, #ff4444);
+  color: #111;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+
+.enroll-btn:hover {
+  transform: scale(1.1);
+  color: white;
+  box-shadow: 0 5px 15px rgba(255, 204, 0, 0.6);
+}
+
+/* Highlight pulse effect */
+.course-card.highlight {
+  border: 2px solid #ffcc00;
+  animation: highlightGlow 1.5s ease forwards;
+}
+
+@keyframes highlightGlow {
+  0%, 100% { box-shadow: 0 0 0 #ffcc00; transform: scale(1); }
+  50% { box-shadow: 0 0 20px #ffcc00; transform: scale(1.05); }
+}
+
+/* ------------------- Responsive ------------------- */
+@media (max-width: 1200px) {
+  .courses-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 35px;
+  }
+}
+
+@media (max-width: 992px) {
+  .courses-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Stack vertically and center in viewport */
+  .courses-container {
+    justify-content: center; /* vertical centering */
+    min-height: calc(100vh - 100px); /* adjust for header/footer if any */
+  }
+
+  .courses-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .courses-container h2 {
+    font-size: 2rem;
+  }
+
+  .course-card h3 {
+    font-size: 1.3rem;
+  }
+}

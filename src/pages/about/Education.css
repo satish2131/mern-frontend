@@ -1,0 +1,95 @@
+.education-section {
+  padding: 40px 15px; /* smaller padding */
+  color: white;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 2rem; /* smaller title */
+  margin-bottom: 30px; /* reduced spacing */
+  color: #ffcc00;
+}
+
+.timeline {
+  position: relative;
+  margin: 0 auto;
+  padding: 15px 0; /* smaller padding */
+  width: 90%; /* slightly narrower */
+  max-width: 600px; /* smaller max width */
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  height: 100%;
+  width: 3px; /* thinner line */
+  background: #ffcc00;
+  transform: translateX(-50%);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 30px; /* smaller spacing between items */
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.timeline-item:nth-child(even) {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+.timeline-icon {
+  background: #111;
+  color: #ffcc00;
+  border: 2px solid #ffcc00; /* smaller border */
+  font-size: 1.2rem; /* smaller icon */
+  border-radius: 50%;
+  padding: 10px; /* smaller padding */
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.timeline-content {
+  background: #1a1a1a;
+  padding: 15px; /* smaller padding */
+  border-radius: 10px; /* slightly smaller corners */
+  width: 40%; /* narrower content */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.timeline-content:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(255, 204, 0, 0.3);
+}
+
+.timeline-content h3 {
+  color: #ffcc00;
+  margin-bottom: 8px; /* smaller spacing */
+}
+
+.timeline-content h4 {
+  font-size: 1rem; /* smaller subtitle */
+  margin-bottom: 6px;
+  color: #ccc;
+}
+
+.edu-years {
+  font-size: 0.85rem; /* smaller year label */
+  font-weight: bold;
+  display: block;
+  margin-bottom: 6px;
+  color: #ff4444;
+}
+
+.timeline-content p {
+  font-size: 0.85rem; /* smaller paragraph text */
+  color: #aaa;
+  line-height: 1.4; /* tighter line height */
+}
