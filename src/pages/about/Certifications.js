@@ -5,37 +5,37 @@ export default function Certifications() {
   const certificates = [
     {
       title: "Java",
-      link: "https://github.com/satish2131/.../Java%20certificate%20.pdf",
+      link: "https://github.com/satish2131/Portfolio_files/blob/main/Java%20certificate%20.pdf",
       icon: "fab fa-java",
       color: "#f89820",
     },
     {
       title: "Python",
-      link: "https://github.com/satish2131/.../Python%20certificate.pdf",
+      link: "https://github.com/satish2131/Portfolio_files/blob/main/Python%20certificate%20.pdf",
       icon: "fab fa-python",
       color: "#3776AB",
     },
     {
       title: "AI and Data Skills",
-      link: "https://github.com/satish2131/.../ai%20and%20dataskills%20certification.pdf",
+      link: "https://github.com/satish2131/Portfolio_files/blob/main/ai%20and%20dataskills%20certification.pdf",
       icon: "fas fa-brain",
       color: "#ff4444",
     },
     {
       title: "AWS Academy Cloud Foundations",
-      link: "https://github.com/satish2131/.../cloud%20foundations%20(aws%20academy).pdf",
+      link: "https://github.com/satish2131/Portfolio_files/blob/main/cloud%20foundations%20(aws%20academy).pdf",
       icon: "fab fa-aws",
       color: "#FF9900",
     },
     {
       title: "AWS Academy Cloud Security Foundations",
-      link: "https://github.com/satish2131/.../AWS_Academy_Cloud_Security_Foundations.pdf",
+      link: "https://github.com/satish2131/Portfolio_files/blob/main/AWS_Academy_Cloud_Security_Foundations%20certificate.pdf",
       icon: "fas fa-shield-alt",
       color: "#00cc99",
     },
     {
       title: "Machine Learning with Python",
-      link: "https://github.com/satish2131/.../ML_with_Python_certificate.pdf",
+      link: "https://github.com/satish2131/Portfolio_files/blob/main/embrizion%20ml%20certificate.pdf",
       icon: "fab fa-python",
       color: "#3776AB",
     },
