@@ -14,8 +14,18 @@
   border-radius: 15px;
   margin: 20px 0;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  flex-wrap: wrap;
 }
-
+.hero-content {
+  flex: 1;
+  min-width: 280px; /* ✅ prevents text from squishing */
+}
+.hero-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
 .hero-content h1 {
   font-size: 3rem;
   margin-bottom: 20px;
@@ -46,11 +56,13 @@
 }
 
 .hero-image img {
-  width: 450px;
+  max-width: 100%;  /* ✅ scales with screen */
+  height: auto;     /* ✅ keeps proportions */
   border-radius: 25px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   transition: transform 0.4s;
 }
+
 
 .hero-image img:hover {
   transform: scale(1.05) rotate(-2deg);
@@ -134,7 +146,26 @@
 }
 
 /* ------------------ Responsive Layouts ------------------ */
+/* ✅ Mobile responsive hero */
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column; /* stack text and image */
+    text-align: center;
+    padding: 40px 20px;
+  }
 
+  .hero-content h1 {
+    font-size: 2rem; /* smaller title on mobile */
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  .hero-image img {
+    width: 80%; /* shrink image for mobile */
+  }
+}
 /* Large Desktop (4 columns) */
 @media (max-width: 1440px) {
   .course-cards {
