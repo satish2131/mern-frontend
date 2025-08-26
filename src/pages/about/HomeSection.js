@@ -14,7 +14,7 @@ export default function HomeSection() {
           with me for collaborations and opportunities.
         </p>
         <a
-          href="https://github.com/satish2131/Portfolio_files/blob/main/resume.pdf"
+          href="https://github.com/satish2131/Portfolio_files/blob/main/satish-resume.pdf"
           className="btn"
           target="_blank"
           rel="noopener noreferrer"
