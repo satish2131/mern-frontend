@@ -125,7 +125,7 @@ useEffect(() => {
         <div className={`nav-links ${menuOpen ? "open" : ""}`} ref={menuRef}>
   {onAboutPage ? (
     <>
-      <ScrollLink to="home" smooth duration={500} offset={-70} spy activeClass="active-link">Home</ScrollLink>
+      
       <Link to="/">Home</Link>
       <ScrollLink to="skills" smooth duration={500} offset={-70} spy activeClass="active-link">Skills</ScrollLink>
       <ScrollLink to="certifications" smooth duration={500} offset={-70} spy activeClass="active-link">Certifications</ScrollLink>
