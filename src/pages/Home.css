@@ -1,0 +1,240 @@
+.home-page {
+  color: white;
+  font-family: 'Trebuchet MS', sans-serif;
+  background: #0f0f0f;
+}
+
+/* Hero Section */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 80px 50px;
+  background: linear-gradient(90deg, #0f2027, #203a43, #2c5364);
+  border-radius: 15px;
+  margin: 20px 0;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  flex-wrap: wrap;
+}
+.hero-content {
+  flex: 1;
+  min-width: 280px; /* ✅ prevents text from squishing */
+}
+.hero-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, #ffcc00, #ff4444);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
+.hero-content .btn {
+  background: #ffcc00;
+  color: #111;
+  padding: 12px 25px;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+
+.hero-content .btn:hover {
+  background: linear-gradient(90deg, #ffcc00, #ff4444);
+  transform: translateY(-3px);
+}
+
+.hero-image img {
+  max-width: 100%;  /* ✅ scales with screen */
+  height: auto;     /* ✅ keeps proportions */
+  border-radius: 25px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  transition: transform 0.4s;
+}
+
+
+.hero-image img:hover {
+  transform: scale(1.05) rotate(-2deg);
+}
+
+/* Featured Courses */
+.featured-courses {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.featured-courses h2 {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  color: #ffcc00;
+}
+
+/* Course Cards Grid */
+.course-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* default 4 columns */
+  gap: 25px;
+  justify-items: center; /* horizontal centering */
+  align-items: center;   /* vertical centering */
+}
+
+/* Course Card */
+.course-card {
+  background: #111;
+  border-radius: 20px;
+  padding: 20px;
+  width: 100%;
+  max-width: 300px; /* ensures cards are centered and uniform */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.4s, box-shadow 0.4s;
+}
+
+.course-card:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 15px 30px rgba(255,204,0,0.4);
+}
+
+.course-card img {
+  width: 100%;
+  height: 180px;
+  border-radius: 15px;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.course-card h3 {
+  margin-bottom: 10px;
+  font-size: 1.3rem;
+  color: #ffcc00;
+}
+
+.course-card p {
+  font-size: 0.95rem;
+  margin-bottom: 15px;
+  line-height: 1.4;
+  color: #ccc;
+}
+
+.course-card .btn {
+  display: inline-block;
+  background: #ffcc00;
+  color: #111;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s;
+  align-self: center; /* centers the button horizontally */
+}
+
+.course-card .btn:hover {
+  background: linear-gradient(to right, #ffcc00, #ff4444);
+  transform: scale(1.05);
+}
+
+/* ------------------ Responsive Layouts ------------------ */
+/* ✅ Mobile responsive hero */
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column; /* stack text and image */
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .hero-content h1 {
+    font-size: 2rem; /* smaller title on mobile */
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  .hero-image img {
+    width: 80%; /* shrink image for mobile */
+  }
+}
+/* Large Desktop (4 columns) */
+@media (max-width: 1440px) {
+  .course-cards {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Desktop (3 columns) */
+@media (max-width: 1200px) {
+  .course-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Tablet (2 columns) */
+@media (max-width: 992px) {
+  .course-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile (1 column) */
+@media (max-width: 768px) {
+  .course-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Why Choose Us */
+.why-choose {
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #1e1e1e, #111);
+  border-radius: 20px;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.why-choose h2 {
+  font-size: 2.2rem;
+  margin-bottom: 40px;
+  color: #ffcc00;
+}
+
+.benefits {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.benefit {
+  background: #222;
+  border-radius: 15px;
+  padding: 25px;
+  width: 260px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.benefit:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(255,204,0,0.3);
+}
+
+.benefit h3 {
+  margin-bottom: 15px;
+  color: #ffcc00;
+}
+
+.benefit p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
