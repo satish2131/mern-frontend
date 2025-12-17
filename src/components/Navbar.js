@@ -34,7 +34,7 @@ export default function Navbar({ user, onLogout, onLogin }) {
 
   useEffect(() => {
     axios.get("http://localhost:5000/api/courses")
-      .then(res => setCourses(res.data))
+      .then(res => setCourses(res.data.items || []))
       .catch(err => console.log(err));
   }, []);
 useEffect(() => {
@@ -64,12 +64,9 @@ useEffect(() => {
     navigate("/courses");
 
     setTimeout(() => {
-      const el = document.getElementById(course._id);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth" });
-        const enrollEvent = new CustomEvent("enrollCourseFromSearch", { detail: course });
-        window.dispatchEvent(enrollEvent);
-      }
+      // Always dispatch event to trigger enroll modal in Courses.js
+      const enrollEvent = new CustomEvent("enrollCourseFromSearch", { detail: course });
+      window.dispatchEvent(enrollEvent);
     }, 300);
   };
 
