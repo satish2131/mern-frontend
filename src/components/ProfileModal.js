@@ -45,7 +45,7 @@ export default function ProfileModal({ show, onClose, onLogin }) {
         {/* Animated Avatar */}
         <div className="avatar-container">
           <img
-            src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+            src="https://i.postimg.cc/zvXj73Jn/image.png"
             alt="Profile"
             className="avatar"
           />
