@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { FaTimes, FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash, FaGoogle, FaGithub, FaGraduationCap, FaSpinner } from "react-icons/fa";
 import api from "../api";
 import "./ProfileModal.css";
 
 export default function ProfileModal({ show, onClose, onLogin }) {
   const [isRegister, setIsRegister] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -17,122 +19,158 @@ export default function ProfileModal({ show, onClose, onLogin }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+
+    const emailTrimmed = form.email.trim();
+    const passwordTrimmed = form.password;
+    const nameTrimmed = form.name.trim();
+
+    if (!emailTrimmed || !passwordTrimmed || (isRegister && !nameTrimmed)) {
+      setError("All fields are required.");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailTrimmed)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
+    if (passwordTrimmed.length < 6) {
+      setError("Password must be at least 6 characters long.");
+      return;
+    }
+
+    if (isRegister && nameTrimmed.length < 2) {
+      setError("Name must be at least 2 characters long.");
+      return;
+    }
+
     setLoading(true);
     try {
       let res;
       if (isRegister) {
-        res = await api.post("/api/auth/register", form);
-        // After registration, auto-login
-        res = await api.post("/api/auth/login", { email: form.email, password: form.password });
+        await api.post("/api/auth/register", { name: nameTrimmed, email: emailTrimmed, password: passwordTrimmed });
+        res = await api.post("/api/auth/login", { email: emailTrimmed, password: passwordTrimmed });
       } else {
-        res = await api.post("/api/auth/login", { email: form.email, password: form.password });
+        res = await api.post("/api/auth/login", { email: emailTrimmed, password: passwordTrimmed });
       }
       if (onLogin) onLogin(res.data);
       setLoading(false);
       onClose();
     } catch (err) {
-      setError(err.response?.data?.message || err.message);
+      setError(err.response?.data?.message || "Authentication failed. Please check your credentials.");
       setLoading(false);
     }
   };
 
   return (
-    <div className="profile-modal-overlay">
-      <div className="profile-modal-box">
+    <div className="auth-modal-overlay" onClick={onClose}>
+      <div className="auth-modal-card animate-fade-in" onClick={(e) => e.stopPropagation()}>
         {/* Close Button */}
-        <span className="close-btn" onClick={onClose}>&times;</span>
+        <button className="auth-modal-close" onClick={onClose} aria-label="Close modal">
+          <FaTimes size={16} />
+        </button>
 
-        {/* Animated Avatar */}
-        <div className="avatar-container">
-          <img
-            src="https://i.postimg.cc/zvXj73Jn/image.png"
-            alt="Profile"
-            className="avatar"
-          />
+        {/* Modal Header & Tabs */}
+        <div className="auth-modal-header">
+          <div className="auth-logo-badge">
+            <FaGraduationCap size={24} />
+          </div>
+          <h3>Welcome to Learn<span className="logo-highlight">X</span></h3>
+          <p>Sign in to track your course progress and certificates.</p>
+
+          <div className="auth-tab-group">
+            <button
+              type="button"
+              className={`auth-tab ${!isRegister ? "active" : ""}`}
+              onClick={() => { setIsRegister(false); setError(""); }}
+            >
+              Sign In
+            </button>
+            <button
+              type="button"
+              className={`auth-tab ${isRegister ? "active" : ""}`}
+              onClick={() => { setIsRegister(true); setError(""); }}
+            >
+              Create Account
+            </button>
+          </div>
         </div>
 
-        {/* Login/Register Form */}
-        <form className="login-form" onSubmit={handleSubmit}>
+        {/* Form Body */}
+        <form className="auth-form" onSubmit={handleSubmit}>
           {isRegister && (
+            <div className="input-group">
+              <FaUser className="input-icon" />
+              <input
+                type="text"
+                name="name"
+                placeholder="Full Name"
+                value={form.name}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          )}
+
+          <div className="input-group">
+            <FaEnvelope className="input-icon" />
             <input
-              type="text"
-              name="name"
-              placeholder="Name"
-              value={form.name}
+              type="email"
+              name="email"
+              placeholder="Email Address"
+              value={form.email}
               onChange={handleChange}
               required
             />
-          )}
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={form.email}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={form.password}
-            onChange={handleChange}
-            required
-          />
-          <button className="login-btn" type="submit" disabled={loading}>
-            {loading ? (isRegister ? "Registering..." : "Logging in...") : (isRegister ? "Register" : "Login")}
-          </button>
-          {error && <div style={{ color: "#ff4d4f", marginTop: 8 }}>{error}</div>}
-          <div style={{ marginTop: 18, textAlign: "center" }}>
-            {isRegister ? (
-              <span style={{ color: "#888", fontSize: 15 }}>
-                Already have an account?
-                <button type="button" style={{
-                  color: "#fff",
-                  background: "#4fa3ff",
-                  borderRadius: 16,
-                  padding: "3px 14px",
-                  marginLeft: 8,
-                  fontWeight: 500,
-                  border: "none",
-                  textDecoration: "none",
-                  boxShadow: "0 2px 8px rgba(79,163,255,0.15)",
-                  transition: "background 0.2s",
-                  cursor: "pointer"
-                }}
-                  onClick={() => setIsRegister(false)}
-                  onMouseOver={e => e.target.style.background = '#3578e5'}
-                  onMouseOut={e => e.target.style.background = '#4fa3ff'}
-                >
-                  Login
-                </button>
-              </span>
-            ) : (
-              <span style={{ color: "#888", fontSize: 15 }}>
-                Not registered yet?
-                <button type="button" style={{
-                  color: "#fff",
-                  background: "#4fa3ff",
-                  borderRadius: 16,
-                  padding: "3px 14px",
-                  marginLeft: 8,
-                  fontWeight: 500,
-                  border: "none",
-                  textDecoration: "none",
-                  boxShadow: "0 2px 8px rgba(79,163,255,0.15)",
-                  transition: "background 0.2s",
-                  cursor: "pointer"
-                }}
-                  onClick={() => setIsRegister(true)}
-                  onMouseOver={e => e.target.style.background = '#3578e5'}
-                  onMouseOut={e => e.target.style.background = '#4fa3ff'}
-                >
-                  Register now
-                </button>
-              </span>
-            )}
           </div>
+
+          <div className="input-group">
+            <FaLock className="input-icon" />
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Password (min 6 characters)"
+              value={form.password}
+              onChange={handleChange}
+              minLength={6}
+              required
+            />
+            <button
+              type="button"
+              className="password-toggle-btn"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <FaEyeSlash size={14} /> : <FaEye size={14} />}
+            </button>
+          </div>
+
+          {error && <div className="auth-error-toast">{error}</div>}
+
+          <button className="btn btn-primary auth-submit-btn" type="submit" disabled={loading}>
+            {loading ? (
+              <span className="loading-spinner"><FaSpinner className="spin" /> Processing...</span>
+            ) : isRegister ? (
+              "Register & Start Learning"
+            ) : (
+              "Sign In to Account"
+            )}
+          </button>
         </form>
+
+        {/* Social Auth Mock */}
+        <div className="social-auth-divider">
+          <span>OR CONTINUE WITH</span>
+        </div>
+
+        <div className="social-auth-buttons">
+          <button type="button" className="social-btn google-btn">
+            <FaGoogle /> Google
+          </button>
+          <button type="button" className="social-btn github-btn">
+            <FaGithub /> GitHub
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -1,70 +1,78 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Link as ScrollLink } from "react-scroll";
-import { FaUserCircle, FaBell } from "react-icons/fa";
-import axios from "axios";
+import { FaUserCircle, FaBell, FaSearch, FaTimes, FaGraduationCap, FaSignOutAlt, FaBookOpen, FaAward, FaSignInAlt, FaHistory } from "react-icons/fa";
+import api from "../api";
 import ProfileModal from "./ProfileModal";
 import "./Navbar.css";
 
 export default function Navbar({ user, onLogout, onLogin }) {
   const location = useLocation();
-  const onAboutPage = location.pathname === "/about";
   const navigate = useNavigate();
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
 
   // Notifications
-  const [notifications, setNotifications] = useState([
-    { id: 1, message: "New 3 courses are available." },
-    { id: 2, message: "New course available: React Advanced." }
+  const [notifications] = useState([
+    { id: 1, title: "Special Offer", message: "50% off on Web Development courses!", time: "2m ago" },
+    { id: 2, title: "New Release", message: "Python & Machine Learning Masterclass added.", time: "1h ago" }
   ]);
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [showNotifModal, setShowNotifModal] = useState(false);
-  const [newNotification, setNewNotification] = useState(false);
+  const [hasNewNotif, setHasNewNotif] = useState(true);
 
   const notifRef = useRef();
-  const bellRef = useRef();
+  const profileDropdownRef = useRef();
   const searchRef = useRef();
-  const menuRef = useRef(); // 🔥 Ref for search container
+  const menuRef = useRef();
 
-  // 🔥 Search
+  // Search
   const [courses, setCourses] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/courses")
-      .then(res => setCourses(res.data.items || []))
-      .catch(err => console.log(err));
+    api.get("/api/courses")
+      .then(res => setCourses(res.data.items || res.data || []))
+      .catch(err => console.log("Failed to load search courses:", err));
   }, []);
-useEffect(() => {
-  const handleClickOutsideMenu = (event) => {
-    if (menuRef.current && !menuRef.current.contains(event.target)) {
-      setMenuOpen(false);
-    }
-  };
-  document.addEventListener("mousedown", handleClickOutsideMenu);
-  return () => document.removeEventListener("mousedown", handleClickOutsideMenu);
-}, []);
+
   useEffect(() => {
-    if (searchTerm === "") {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+      if (notifRef.current && !notifRef.current.contains(event.target)) {
+        setShowNotifModal(false);
+      }
+      if (profileDropdownRef.current && !profileDropdownRef.current.contains(event.target)) {
+        setProfileDropdownOpen(false);
+      }
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setSuggestions([]);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    if (!searchTerm.trim()) {
       setSuggestions([]);
       return;
     }
     const filtered = courses.filter(course =>
-      course.title.toLowerCase().includes(searchTerm.toLowerCase())
+      course.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      course.description?.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    setSuggestions(filtered);
+    setSuggestions(filtered.slice(0, 5));
   }, [searchTerm, courses]);
 
   const handleSearchSelect = (course) => {
     setSearchTerm("");
     setSuggestions([]);
-
     navigate("/courses");
-
     setTimeout(() => {
-      // Always dispatch event to trigger enroll modal in Courses.js
       const enrollEvent = new CustomEvent("enrollCourseFromSearch", { detail: course });
       window.dispatchEvent(enrollEvent);
     }, 300);
@@ -72,157 +80,170 @@ useEffect(() => {
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
-
-  // Toggle Notification Modal
-  const handleNotificationsClick = () => {
-    setShowNotifModal(!showNotifModal);
-    setNewNotification(false); // reset shake when opened
-  };
-
-  // Close notification modal on outside click
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (notifRef.current && !notifRef.current.contains(event.target)) {
-        setShowNotifModal(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  // Close search suggestions on outside click
-  useEffect(() => {
-    const handleClickOutsideSearch = (event) => {
-      if (searchRef.current && !searchRef.current.contains(event.target)) {
-        setSuggestions([]);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutsideSearch);
-    return () => document.removeEventListener("mousedown", handleClickOutsideSearch);
-  }, []);
-
-  // Example: Add new notification after 5s
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setNotifications(prev => [
-        ...prev,
-        { id: 3, message: "Register Now ! Hurry🎉" }
-      ]);
-      setNewNotification(true);
-    }, 5000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <>
-      <header className="navbar">
-        <Link to="/" className="logo">LearnX</Link>
+      <header className="navbar-container">
+        <div className="navbar-content">
+          {/* Logo */}
+          <Link to="/" className="navbar-logo">
+            <div className="logo-icon">
+              <FaGraduationCap size={22} />
+            </div>
+            <span className="logo-text">Learn<span className="logo-highlight">X</span></span>
+          </Link>
 
-        <div className={`nav-links ${menuOpen ? "open" : ""}`} ref={menuRef}>
-  {onAboutPage ? (
-    <>
-      <Link to="/">Home</Link>
-      <ScrollLink to="skills" smooth duration={500} offset={-70} spy activeClass="active-link">Skills</ScrollLink>
-      <ScrollLink to="certifications" smooth duration={500} offset={-70} spy activeClass="active-link">Certifications</ScrollLink>
-      <ScrollLink to="education" smooth duration={500} offset={-70} spy activeClass="active-link">Education</ScrollLink>
-      <ScrollLink to="contactme" smooth duration={500} offset={-70} spy activeClass="active-link">Contact Me</ScrollLink>
-    </>
-  ) : (
-    <>
-      <Link to="/">Home</Link>
-  <Link to="/courses">Courses</Link>
-  {user && <Link to="/certificates">Certificates</Link>}
-  <Link to="/contact">Contact us</Link>
-  <Link to="/about">About Us</Link>
-    </>
-  )}
-
-
-          {/* 🔥 Search */}
-          <div className="search-container" ref={searchRef}>
-            <input
-              type="text"
-              placeholder="Search courses..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              onFocus={() => setSuggestions(courses.filter(course =>
-                course.title.toLowerCase().includes(searchTerm.toLowerCase())
-              ))}
-            />
-            {suggestions.length > 0 && (
-              <ul className="search-suggestions slide-in">
-                {suggestions.map(course => (
-                  <li key={course._id} onClick={() => handleSearchSelect(course)}>
-                    {course.image && <img src={course.image} alt={course.title} />}
-                    <span>{course.title}</span>
-                  </li>
-                ))}
-              </ul>
+          {/* Navigation Links */}
+          <nav className={`nav-links ${menuOpen ? "open" : ""}`} ref={menuRef}>
+            <Link to="/" className={location.pathname === "/" ? "active" : ""} onClick={() => setMenuOpen(false)}>Home</Link>
+            <Link to="/courses" className={location.pathname === "/courses" ? "active" : ""} onClick={() => setMenuOpen(false)}>Explore Courses</Link>
+            {user && (
+              <>
+                <Link to="/history" className={location.pathname === "/history" ? "active" : ""} onClick={() => setMenuOpen(false)}>My History</Link>
+                <Link to="/certificates" className={location.pathname === "/certificates" ? "active" : ""} onClick={() => setMenuOpen(false)}>Certificates</Link>
+              </>
             )}
-          </div>
+            <Link to="/contact" className={location.pathname === "/contact" ? "active" : ""} onClick={() => setMenuOpen(false)}>Contact</Link>
+          </nav>
 
-          {/* Notification Bell */}
-          <div className="notification-btn" onClick={handleNotificationsClick} ref={bellRef}>
-            <FaBell size={20} className={newNotification ? "shake" : ""} />
-            {notifications.length > 0 && <span className="notification-count">{notifications.length}</span>}
-          </div>
+          {/* Right Section: Search, Notifs & User Profile */}
+          <div className="navbar-actions">
+            {/* Search Input */}
+            <div className="navbar-search" ref={searchRef}>
+              <FaSearch className="search-icon" />
+              <input
+                type="text"
+                placeholder="Search catalog..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onFocus={() => {
+                  if (searchTerm.trim() && courses.length) {
+                    setSuggestions(courses.filter(c => c.title?.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 5));
+                  }
+                }}
+              />
+              {searchTerm && (
+                <button className="search-clear-btn" onClick={() => setSearchTerm("")}>
+                  <FaTimes size={12} />
+                </button>
+              )}
 
-          {/* Notification Modal */}
-          {showNotifModal && (
-            <div ref={notifRef} className="notification-modal slide-in">
-              {notifications.length === 0 ? (
-                <div className="no-notifications">No updates currently</div>
-              ) : (
-                <ul>
-                  {notifications.map((notif) => (
-                    <li key={notif.id}>{notif.message}</li>
+              {/* Suggestions Dropdown */}
+              {suggestions.length > 0 && (
+                <div className="search-dropdown animate-fade-in">
+                  <div className="search-dropdown-header">Matching Courses ({suggestions.length})</div>
+                  {suggestions.map(course => (
+                    <div key={course._id} className="search-item" onClick={() => handleSearchSelect(course)}>
+                      <div className="search-item-icon">
+                        <FaBookOpen />
+                      </div>
+                      <div className="search-item-info">
+                        <div className="search-item-title">{course.title}</div>
+                        <div className="search-item-desc">{course.description?.substring(0, 45)}...</div>
+                      </div>
+                    </div>
                   ))}
-                </ul>
+                </div>
               )}
             </div>
-          )}
 
-          {/* Profile Icon and username as plain text after login */}
-          {user ? (
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <FaUserCircle size={28} style={{ color: "#fff" }} />
-              <span style={{ fontWeight: 600, color: "#fff", fontSize: 17 }}>
-                Hi, {user.name}
-              </span>
+            {/* Notification Bell */}
+            <div className="notif-wrapper" ref={notifRef}>
               <button
-                onClick={onLogout}
-                style={{
-                  marginLeft: 18,
-                  background: "#4fa3ff",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: 16,
-                  padding: "6px 20px",
-                  fontWeight: 500,
-                  fontSize: 15,
-                  cursor: "pointer",
-                  transition: "background 0.2s"
+                className="notif-btn"
+                onClick={() => {
+                  setShowNotifModal(!showNotifModal);
+                  setHasNewNotif(false);
                 }}
-                onMouseOver={e => e.target.style.background = '#3578e5'}
-                onMouseOut={e => e.target.style.background = '#4fa3ff'}
+                aria-label="Notifications"
               >
-                Logout
+                <FaBell size={18} />
+                {hasNewNotif && <span className="notif-dot" />}
               </button>
+
+              {/* Notification Drawer */}
+              {showNotifModal && (
+                <div className="notif-dropdown animate-fade-in">
+                  <div className="notif-header">
+                    <h4>Notifications</h4>
+                    <span className="notif-badge">{notifications.length} New</span>
+                  </div>
+                  <div className="notif-list">
+                    {notifications.map((n) => (
+                      <div key={n.id} className="notif-card">
+                        <div className="notif-title">{n.title}</div>
+                        <div className="notif-body">{n.message}</div>
+                        <div className="notif-time">{n.time}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
-          ) : (
-            <div className="profile-btn" style={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={() => setShowProfileModal(true)}>
-              <FaUserCircle size={28} style={{ color: "#fff" }} />
-            </div>
-          )}
+
+            {/* User Profile / Auth Action */}
+            {user ? (
+              <div className="user-profile-wrapper" ref={profileDropdownRef}>
+                <button
+                  className="user-profile-trigger"
+                  onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+                >
+                  <div className="avatar-circle">
+                    {user.name ? user.name.charAt(0).toUpperCase() : <FaUserCircle size={22} />}
+                  </div>
+                  <span className="user-name">Hi, {user.name?.split(" ")[0]}</span>
+                </button>
+
+                {profileDropdownOpen && (
+                  <div className="profile-dropdown animate-fade-in">
+                    <div className="profile-dropdown-header">
+                      <div className="profile-fullname">{user.name}</div>
+                      <div className="profile-email">{user.email}</div>
+                    </div>
+                    <div className="profile-dropdown-divider" />
+                    <Link to="/history" className="profile-dropdown-item" onClick={() => setProfileDropdownOpen(false)}>
+                      <FaHistory size={14} /> My History
+                    </Link>
+                    <Link to="/courses" className="profile-dropdown-item" onClick={() => setProfileDropdownOpen(false)}>
+                      <FaBookOpen size={14} /> My Courses
+                    </Link>
+                    <Link to="/certificates" className="profile-dropdown-item" onClick={() => setProfileDropdownOpen(false)}>
+                      <FaAward size={14} /> Certificates
+                    </Link>
+                    <div className="profile-dropdown-divider" />
+                    <button className="profile-dropdown-item logout-item" onClick={() => { setProfileDropdownOpen(false); onLogout(); }}>
+                      <FaSignOutAlt size={14} /> Log Out
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <button className="btn btn-primary nav-login-btn" onClick={() => setShowProfileModal(true)}>
+                <FaSignInAlt size={14} /> Sign In
+              </button>
+            )}
+
+            {/* Hamburger Mobile Button */}
+            <button className={`hamburger-btn ${menuOpen ? "active" : ""}`} onClick={toggleMenu} aria-label="Toggle Menu">
+              <span className="bar" />
+              <span className="bar" />
+              <span className="bar" />
+            </button>
+          </div>
         </div>
 
-        <div className={`hamburger ${menuOpen ? "active" : ""}`} onClick={toggleMenu}>
-          <span></span><span></span><span></span>
+        {/* Mathematically Smooth Double Sine Wave (Crest Up, Trough Down) */}
+        <div className="navbar-wave-bottom">
+          <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <path 
+              fill="#4d2d0b" 
+              d="M 0,0 L 1440,0 L 1440,60 Q 1080,115 720,60 T 0,60 Z"
+            />
+          </svg>
         </div>
       </header>
 
-  <ProfileModal show={showProfileModal} onClose={() => setShowProfileModal(false)} onLogin={onLogin} />
+      {/* Auth Modal Trigger */}
+      <ProfileModal show={showProfileModal} onClose={() => setShowProfileModal(false)} onLogin={onLogin} />
     </>
   );
 }

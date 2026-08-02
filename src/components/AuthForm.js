@@ -12,9 +12,37 @@ const AuthForm = ({ onAuth, isLogin }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+
+    const emailTrimmed = form.email.trim();
+    const passwordTrimmed = form.password;
+    const nameTrimmed = form.name.trim();
+
+    if (!emailTrimmed || !passwordTrimmed || (!isLogin && !nameTrimmed)) {
+      setError("All fields are required.");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailTrimmed)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
+    if (passwordTrimmed.length < 6) {
+      setError("Password must be at least 6 characters long.");
+      return;
+    }
+
+    if (!isLogin && nameTrimmed.length < 2) {
+      setError("Name must be at least 2 characters long.");
+      return;
+    }
+
     try {
       const endpoint = isLogin ? "/api/auth/login" : "/api/auth/register";
-      const body = isLogin ? { email: form.email, password: form.password } : form;
+      const body = isLogin 
+        ? { email: emailTrimmed, password: passwordTrimmed } 
+        : { name: nameTrimmed, email: emailTrimmed, password: passwordTrimmed };
       const res = await api.post(endpoint, body);
       onAuth(res.data);
     } catch (err) {
