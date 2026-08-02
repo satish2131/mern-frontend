@@ -1,7 +1,12 @@
 import axios from "axios";
 
+let baseURL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+if (baseURL.endsWith("/api")) {
+  baseURL = baseURL.slice(0, -4);
+}
+
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || "http://localhost:5000"
+  baseURL
 });
 
 // Fetch paginated courses
