@@ -204,5 +204,37 @@
 @media (max-width: 992px) {
   .contact-grid {
     grid-template-columns: 1fr;
+    gap: 28px;
   }
 }
+
+@media (max-width: 768px) {
+  .contact-header-bg {
+    padding: 40px 0 24px;
+    margin-bottom: 24px;
+  }
+
+  .contact-header-container h1 {
+    font-size: 1.85rem;
+  }
+
+  .contact-glass-form {
+    padding: 24px 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .contact-header-container,
+  .contact-body-container {
+    padding: 0 16px;
+  }
+
+  .contact-glass-form {
+    padding: 20px 14px;
+  }
+
+  .contact-glass-form h2 {
+    font-size: 1.35rem;
+  }
+}
+

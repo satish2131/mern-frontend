@@ -34,9 +34,72 @@
 
 .certificate-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
   gap: 24px;
 }
+
+@media (max-width: 768px) {
+  .cert-header-bg {
+    padding: 40px 0 24px;
+    margin-bottom: 24px;
+  }
+
+  .cert-header-container h1 {
+    font-size: 1.85rem;
+  }
+
+  .certificate-grid {
+    gap: 16px;
+  }
+
+  .diploma-border {
+    padding: 24px 16px;
+  }
+
+  .diploma-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .diploma-student-name {
+    font-size: 1.3rem;
+  }
+
+  .diploma-course-name {
+    font-size: 1.1rem;
+  }
+
+  .diploma-footer {
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .cert-header-container,
+  .cert-body-container {
+    padding: 0 16px;
+  }
+
+  .certificate-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cert-card-footer {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .cert-modal-overlay {
+    padding: 12px;
+  }
+
+  .diploma-frame {
+    padding: 14px;
+  }
+}
+
 
 .certificate-card {
   padding: 24px;

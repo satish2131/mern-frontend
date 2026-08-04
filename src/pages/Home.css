@@ -505,12 +505,13 @@
 @media (max-width: 992px) {
   .hero-container {
     grid-template-columns: 1fr;
+    gap: 36px;
   }
   .hero-title {
     font-size: 2.4rem;
   }
   .features-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
   .testimonials-grid {
     grid-template-columns: 1fr;
@@ -520,3 +521,101 @@
     text-align: center;
   }
 }
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 40px 0 30px;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .section-title {
+    font-size: 1.75rem;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .course-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+  }
+
+  .category-pill-group {
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .category-pill {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  .cta-banner {
+    padding: 28px 20px;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .section-container,
+  .hero-container {
+    padding: 0 16px;
+  }
+
+  .hero-title {
+    font-size: 1.65rem;
+    line-height: 1.25;
+  }
+
+  .hero-subtitle {
+    font-size: 0.92rem;
+    margin-bottom: 24px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .hero-btn {
+    width: 100%;
+  }
+
+  .hero-metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .metric-divider {
+    display: none;
+  }
+
+  .hero-visual-card {
+    padding: 16px;
+  }
+
+  .cta-content h2 {
+    font-size: 1.5rem;
+  }
+
+  .cta-btn {
+    width: 100%;
+  }
+}
+

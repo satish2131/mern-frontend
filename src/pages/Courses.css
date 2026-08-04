@@ -302,3 +302,70 @@
   text-align: center;
   margin-top: 40px;
 }
+
+/* Responsive Media Queries */
+@media (max-width: 768px) {
+  .catalog-header-bg {
+    padding: 40px 0 24px;
+    margin-bottom: 24px;
+  }
+
+  .catalog-header-container h1 {
+    font-size: 1.85rem;
+  }
+
+  .catalog-header-container p {
+    font-size: 0.95rem;
+  }
+
+  .catalog-control-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding: 14px;
+  }
+
+  .catalog-search-box {
+    max-width: 100%;
+  }
+
+  .catalog-sort-box {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .catalog-sort-box select {
+    flex: 1;
+  }
+
+  .catalog-category-bar {
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 10px;
+  }
+
+  .catalog-grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  .catalog-container,
+  .catalog-header-container {
+    padding: 0 16px;
+  }
+
+  .catalog-header-container h1 {
+    font-size: 1.55rem;
+  }
+
+  .catalog-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-action-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+

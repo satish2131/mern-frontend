@@ -272,8 +272,71 @@
   gap: 16px;
 }
 
+.code-block {
+  padding: 16px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  font-family: 'Fira Code', 'Consolas', monospace;
+  font-size: 0.85rem;
+  color: #34d399;
+  line-height: 1.6;
+}
+
+.quiz-option-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  min-height: 48px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-glass);
+  cursor: pointer;
+  transition: var(--transition);
+  touch-action: manipulation;
+}
+
 @media (max-width: 768px) {
-  .theory-section, .quiz-section {
-    padding: 24px 16px;
+  .module-header-bg {
+    padding: 30px 0 20px;
+    margin-bottom: 24px;
+  }
+
+  .module-title-row h1 {
+    font-size: 1.75rem;
+  }
+
+  .theory-section,
+  .quiz-section {
+    padding: 20px 14px;
+  }
+
+  .quiz-question-card {
+    padding: 18px 14px;
   }
 }
+
+@media (max-width: 576px) {
+  .module-header-container,
+  .module-body-container {
+    padding: 0 16px;
+  }
+
+  .module-title-row h1 {
+    font-size: 1.45rem;
+  }
+
+  .result-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn-submit-quiz {
+    width: 100%;
+  }
+
+  .quiz-result-card h3 {
+    font-size: 1.4rem;
+  }
+}
+

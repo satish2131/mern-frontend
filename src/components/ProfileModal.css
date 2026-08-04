@@ -243,3 +243,25 @@
   background: #f3eee7;
   border-color: #6e4414;
 }
+
+@media (max-width: 576px) {
+  .auth-modal-overlay {
+    padding: 12px;
+  }
+
+  .auth-modal-card {
+    padding: 28px 18px 20px;
+    max-height: 92vh;
+    overflow-y: auto;
+  }
+
+  .auth-modal-header h3 {
+    font-size: 1.25rem;
+  }
+
+  .social-auth-buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+

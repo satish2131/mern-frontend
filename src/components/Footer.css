@@ -200,17 +200,40 @@
 @media (max-width: 992px) {
   .footer-content {
     grid-template-columns: 1fr 1fr;
+    gap: 32px;
   }
 }
 
 @media (max-width: 600px) {
+  .footer-container {
+    margin-top: 40px;
+  }
+
   .footer-content {
     grid-template-columns: 1fr;
-    gap: 30px;
+    gap: 28px;
+    padding: 40px 16px 30px;
   }
+
   .footer-bottom-content {
     flex-direction: column;
     gap: 14px;
     text-align: center;
   }
+
+  .newsletter-form {
+    flex-direction: row;
+  }
 }
+
+@media (max-width: 480px) {
+  .social-links {
+    justify-content: flex-start;
+  }
+
+  .trust-badges {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+
