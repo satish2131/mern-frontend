@@ -146,39 +146,42 @@ export default function Navbar({ user, onLogout, onLogin }) {
               )}
             </div>
 
-            {/* Notification Bell */}
-            <div className="notif-wrapper" ref={notifRef}>
-              <button
-                className="notif-btn"
-                onClick={() => {
-                  setShowNotifModal(!showNotifModal);
-                  setHasNewNotif(false);
-                }}
-                aria-label="Notifications"
-              >
-                <FaBell size={18} />
-                {hasNewNotif && <span className="notif-dot" />}
-              </button>
+            {/* Notification Bell (Only shown when logged in) */}
+            {user && (
+              <div className="notif-wrapper" ref={notifRef}>
+                <button
+                  className="notif-btn"
+                  onClick={() => {
+                    setShowNotifModal(!showNotifModal);
+                    setHasNewNotif(false);
+                  }}
+                  aria-label="Notifications"
+                >
+                  <FaBell size={18} />
+                  {hasNewNotif && <span className="notif-dot" />}
+                </button>
 
-              {/* Notification Drawer */}
-              {showNotifModal && (
-                <div className="notif-dropdown animate-fade-in">
-                  <div className="notif-header">
-                    <h4>Notifications</h4>
-                    <span className="notif-badge">{notifications.length} New</span>
+                {/* Notification Drawer */}
+                {showNotifModal && (
+                  <div className="notif-dropdown animate-fade-in">
+                    <div className="notif-header">
+                      <h4>Notifications</h4>
+                      <span className="notif-badge">{notifications.length} New</span>
+                    </div>
+                    <div className="notif-list">
+                      {notifications.map((n) => (
+                        <div key={n.id} className="notif-card">
+                          <div className="notif-title">{n.title}</div>
+                          <div className="notif-body">{n.message}</div>
+                          <div className="notif-time">{n.time}</div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                  <div className="notif-list">
-                    {notifications.map((n) => (
-                      <div key={n.id} className="notif-card">
-                        <div className="notif-title">{n.title}</div>
-                        <div className="notif-body">{n.message}</div>
-                        <div className="notif-time">{n.time}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
+                )}
+              </div>
+            )}
+
 
             {/* User Profile / Auth Action */}
             {user ? (

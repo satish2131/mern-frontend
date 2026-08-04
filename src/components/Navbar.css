@@ -529,36 +529,68 @@
 
 @media (max-width: 576px) {
   .navbar-container {
-    padding: 10px 0 12px;
+    padding: 8px 0 10px;
   }
 
-  .navbar-logo {
-    font-size: 1.2rem;
+  .navbar-content {
+    padding: 0 12px;
     gap: 8px;
   }
 
+  .navbar-logo {
+    font-size: 1.15rem;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
   .logo-icon {
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
   }
 
   .navbar-actions {
-    gap: 10px;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .navbar-search {
+    position: relative;
+    z-index: 10;
   }
 
   .navbar-search input {
-    width: 120px;
-    padding: 6px 12px 6px 30px;
+    width: 34px;
+    padding: 6px 0 6px 28px;
     font-size: 0.8rem;
+    transition: width 0.3s ease, padding 0.3s ease, background 0.3s ease;
+    cursor: pointer;
   }
 
-  .navbar-search input:focus {
-    width: 150px;
+  .navbar-search input::placeholder {
+    color: transparent;
+  }
+
+  .navbar-search input:focus,
+  .navbar-search input:not(:placeholder-shown) {
+    width: 125px;
+    padding: 6px 24px 6px 30px;
+    cursor: text;
+  }
+
+  .navbar-search input:focus::placeholder {
+    color: #f3eee7;
   }
 
   .search-icon {
-    left: 10px;
+    left: 9px;
     font-size: 12px;
+    pointer-events: none;
+  }
+
+  .notif-btn {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
   }
 
   .user-name {
@@ -566,36 +598,46 @@
   }
 
   .user-profile-trigger {
-    padding: 4px;
+    padding: 3px;
+  }
+
+  .avatar-circle {
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
   }
 
   .nav-login-btn {
-    padding: 6px 14px;
-    font-size: 0.8rem;
+    padding: 6px 12px;
+    font-size: 0.78rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .hamburger-btn {
+    flex-shrink: 0;
+    margin-left: 2px;
   }
 
   .notif-dropdown,
   .profile-dropdown,
   .search-dropdown {
     position: fixed;
-    top: 60px;
-    left: 16px;
-    right: 16px;
+    top: 56px;
+    left: 12px;
+    right: 12px;
     width: auto;
     max-width: none;
   }
 }
 
-@media (max-width: 380px) {
-  .navbar-search input {
-    width: 90px;
-  }
-
-  .navbar-search input:focus {
-    width: 120px;
-  }
-
+@media (max-width: 360px) {
   .logo-text {
-    font-size: 1.1rem;
+    display: none;
+  }
+
+  .navbar-search input:focus,
+  .navbar-search input:not(:placeholder-shown) {
+    width: 105px;
   }
 }
