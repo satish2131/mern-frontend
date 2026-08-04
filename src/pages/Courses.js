@@ -48,7 +48,7 @@ export default function Courses() {
       // Enrich items with fallback properties for e-commerce catalog
       const enriched = items.map((c, i) => ({
         ...c,
-        price: c.price || [49.99, 59.99, 39.99, 69.99, 29.99][i % 5],
+        price: c.price || [3999, 4999, 2999, 5999, 1999][i % 5],
         rating: c.rating || [4.9, 4.85, 4.95, 4.78, 4.88][i % 5],
         reviewsCount: c.reviewsCount || Math.floor(Math.random() * 800) + 200,
         category: c.category || ["Web Dev", "AI & ML", "Cloud", "Database", "Design"][i % 5]
@@ -183,8 +183,8 @@ export default function Courses() {
 
                   <div className="card-price-row">
                     <div className="price-box">
-                      <span className="current-price">${course.price}</span>
-                      <span className="original-price">${(course.price * 2).toFixed(2)}</span>
+                      <span className="current-price">₹{Number(course.price).toLocaleString('en-IN')}</span>
+                      <span className="original-price">₹{(Number(course.price) * 2).toLocaleString('en-IN')}</span>
                     </div>
                     <span className="discount-pill">50% OFF</span>
                   </div>

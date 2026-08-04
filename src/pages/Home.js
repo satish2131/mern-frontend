@@ -196,7 +196,7 @@ console.log("Status: Career Ready 🚀");`}</code>
                     width="300"
                     height="180"
                   />
-                  <span className="card-price-tag">${course.price || 49.99}</span>
+                  <span className="card-price-tag">₹{course.price ? course.price.toLocaleString('en-IN') : "3,999"}</span>
                   <span className="card-badge-pill">-50% OFF</span>
                 </div>
 

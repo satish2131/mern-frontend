@@ -17,9 +17,9 @@ export default function EnrollmentModal({ show, course, onClose, fromHome = fals
 
   if (!show || !course) return null;
 
-  const basePrice = course.price || 49.99;
+  const basePrice = course.price || 3999;
   const discountAmount = discountApplied ? basePrice * 0.5 : basePrice * 0.2;
-  const finalPrice = Math.max(0, basePrice - discountAmount).toFixed(2);
+  const finalPrice = Math.max(0, basePrice - discountAmount);
 
   const applyPromo = () => {
     if (promoCode.trim().toUpperCase() === "LEARNX50" || promoCode.trim().toUpperCase() === "PROMO50") {
@@ -95,7 +95,7 @@ export default function EnrollmentModal({ show, course, onClose, fromHome = fals
                   <span><FaStar size={12} color="#fbbf24" /> 4.9 (1.2k reviews)</span>
                 </div>
               </div>
-              <div className="summary-price">${basePrice}</div>
+              <div className="summary-price">₹{basePrice.toLocaleString('en-IN')}</div>
             </div>
 
             <form onSubmit={handleCheckout} className="checkout-form">
@@ -148,7 +148,7 @@ export default function EnrollmentModal({ show, course, onClose, fromHome = fals
                     className={`pay-opt ${paymentMethod === "upi" ? "active" : ""}`}
                     onClick={() => setPaymentMethod("upi")}
                   >
-                    <FaBolt color="#f59e0b" /> Instant UPI / Apple Pay
+                    <FaBolt color="#f59e0b" /> Instant UPI / Net Banking
                   </button>
                 </div>
               </div>
@@ -157,15 +157,15 @@ export default function EnrollmentModal({ show, course, onClose, fromHome = fals
               <div className="price-breakdown">
                 <div className="price-row">
                   <span>Course Price</span>
-                  <span>${basePrice}</span>
+                  <span>₹{basePrice.toLocaleString('en-IN')}</span>
                 </div>
                 <div className="price-row discount-row">
                   <span>Discount</span>
-                  <span>-${discountAmount.toFixed(2)}</span>
+                  <span>-₹{discountAmount.toLocaleString('en-IN')}</span>
                 </div>
                 <div className="price-row total-row">
                   <span>Total Amount</span>
-                  <span className="total-amount">${finalPrice}</span>
+                  <span className="total-amount">₹{finalPrice.toLocaleString('en-IN')}</span>
                 </div>
               </div>
 
@@ -174,7 +174,7 @@ export default function EnrollmentModal({ show, course, onClose, fromHome = fals
                 {isProcessing ? (
                   <span className="loading-spinner"><FaSpinner className="spin" /> Processing Order...</span>
                 ) : (
-                  `Pay $${finalPrice} & Enroll`
+                  `Pay ₹${finalPrice.toLocaleString('en-IN')} & Enroll`
                 )}
               </button>
 
@@ -205,7 +205,7 @@ export default function EnrollmentModal({ show, course, onClose, fromHome = fals
               </div>
               <div className="receipt-row">
                 <span>Total Paid:</span>
-                <strong>${finalPrice}</strong>
+                <strong>₹{finalPrice.toLocaleString('en-IN')}</strong>
               </div>
             </div>
 

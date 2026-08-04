@@ -169,8 +169,8 @@ export default function CourseDetails() {
             </div>
 
             <div className="purchase-price-box">
-              <div className="price-main">${course.price || 49.99}</div>
-              <div className="price-old">${((course.price || 49.99) * 2).toFixed(2)}</div>
+              <div className="price-main">₹{Number(course.price || 3999).toLocaleString('en-IN')}</div>
+              <div className="price-old">₹{(Number(course.price || 3999) * 2).toLocaleString('en-IN')}</div>
               <span className="badge badge-success">50% Discount</span>
             </div>
 

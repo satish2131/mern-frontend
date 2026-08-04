@@ -1,8 +1,18 @@
-import React, { useState, lazy, Suspense } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useState, lazy, Suspense, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import AuthForm from "./components/AuthForm";
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [pathname]);
+
+  return null;
+}
 
 // Route-based Code Splitting with React.lazy
 const Home = lazy(() => import("./pages/Home"));
@@ -59,6 +69,7 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <Navbar user={user} onLogout={handleLogout} onLogin={handleAuth} />
       <main style={{ paddingTop: "74px", minHeight: "80vh" }}>
         <Suspense fallback={<PageFallback />}>
@@ -79,5 +90,6 @@ function App() {
     </Router>
   );
 }
+
 
 export default App;
